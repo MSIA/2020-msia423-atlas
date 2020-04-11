@@ -1,3 +1,40 @@
+# MSiA 423 Project Repository
+This project was created by Jake Atlas, with QA contributions from Brian Cai. Use the links below to jump to particular areas of interest.
+
+- [Project Charter](#project-charter)
+- [Backlog](#backlog)
+
+## Project Charter
+### Vision
+This project was born out of a desire to minimize time spent on research when adopting a new puppy. There are countless attributes a future dog adopter must consider that make some dog breeds more desirable than others. The application developed here seeks to circumvent the initial step of performing extensive research by limiting the scope of the search for ideal dog breeds.
+
+### Mission
+To build an application that provides an intuitive user interface for interaction with a k-means clustering model "trained" on manually-compiled data regarding characteristics of American Kennel Club (AKC) dog breeds from dogtime.com. Users will provide information through the interface and will be supplied with recommendations of dog breeds to investigate based on cluster membership. 
+
+### Success Criteria
+Success is very difficult to measure in an unsupervised learning model, as such models find natural groupings in the data. Therefore success will be defined instead as the identification of at least 4 unique clusters, which would cut the research time by as much as 75%. This project would be deemed successful from a business standpoint if it helps even 1 person find their new puppy soulmate.
+
+## Backlog
+### Initiative: Develop an interactive app for recommending dog breeds based on k-means clustering
+** denotes a task that will be addressed in the next 2-week sprint
+note that stories are signed with "quick," "medium," "long," and "unknown" to identify the amount of time it will take to accomplish each task. 
+
+- Epic 1: Develop charter and backlog
+	- Develop charter (quick, backlog) **
+	- Develop backlog (medium, backlog) **
+- Epic 2: Data Preparation
+	- Format data (quick, backlog) **
+	- Store data in S3 (unknown, icebox)
+- Epic 3: Model Selection
+	- Comparison of k-means (at various k) with Gaussian mixture modeling to identify the optimal set of natural data groupings (long, backlog) **
+- Epic 4: Create app frontend
+	- Create landing page (unknown, icebox)
+	- Create interactive survey (unkown, icebox)
+- Epic 5: Integrate app with selected unsupervised model (unknown, icebox) 
+
+
+_____________________________________________________
+
 # MSiA423 Template Repository
 
 <!-- toc -->
