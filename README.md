@@ -9,28 +9,40 @@ This project was created by Jake Atlas, with QA contributions from Brian Cai. Us
 This project was born out of a desire to minimize time spent on research when adopting a new puppy. There are countless attributes a future dog adopter must consider that make some dog breeds more desirable than others. The application developed here seeks to circumvent the initial step of performing extensive research by limiting the scope of the search for ideal dog breeds.
 
 ### Mission
-To build an application that provides an intuitive user interface for interaction with a k-means clustering model "trained" on manually-compiled data regarding characteristics of American Kennel Club (AKC) dog breeds from dogtime.com. Users will provide information through the interface and will be supplied with recommendations of dog breeds to investigate based on cluster membership. 
+To build an application that provides an intuitive user interface for interaction with an unsupervised clustering model "trained" on manually-compiled data regarding characteristics of American Kennel Club (AKC) dog breeds from dogtime.com. Users will provide information through the interface and will be supplied with recommendations of dog breeds to investigate based on cluster membership. 
 
 ### Success Criteria
 Success is very difficult to measure in an unsupervised learning model, as such models find natural groupings in the data. Therefore success will be defined instead as the identification of at least 4 unique clusters, which would cut the research time by as much as 75%. This project would be deemed successful from a business standpoint if it helps even 1 person find their new puppy soulmate.
 
 ## Backlog
-### Initiative: Develop an interactive app for recommending dog breeds based on k-means clustering
 ** denotes a task that will be addressed in the next 2-week sprint
-note that stories are signed with "quick," "medium," "long," and "unknown" to identify the amount of time it will take to accomplish each task. 
-
-- Epic 1: Develop charter and backlog
-	- Develop charter (quick, backlog) **
-	- Develop backlog (medium, backlog) **
-- Epic 2: Data Preparation
+note that stories are signed with "quick," "medium," "long," and "unknown" to identify the amount of time it will take to accomplish each task and will be updated with numbers (as detailed in the project assignment) over time. Currently, too little is known about the content of this course and the project to accurately assess time beyond the categories specified here. 
+### Initiative 1: Planning
+- Epic 1: Develop charter
+	- Vision (quick, backlog) **
+	- Mission (quick, backlog) **
+	- Success Criteria (quick, backlog but subject to change) **
+- Epic 2: Develop backlog
+	- Initiatives (quick, backlog) **
+	- Epics (quick, backlog) **
+	- Stories (quick, backlog) **
+### Initiative 2: Develop an unsupervised, clustering-based model with the "best" natural groupings (best is determined based both on appropriate quantitiative metrics, such as those pertaining to eigenvalues, as well as by explainability of the groupings found).
+- Epic 1: Data Preparation
 	- Format data (quick, backlog) **
 	- Store data in S3 (unknown, icebox)
-- Epic 3: Model Selection
-	- Comparison of k-means (at various k) with Gaussian mixture modeling to identify the optimal set of natural data groupings (long, backlog) **
-- Epic 4: Create app frontend
-	- Create landing page (unknown, icebox)
-	- Create interactive survey (unkown, icebox)
-- Epic 5: Integrate app with selected unsupervised model (unknown, icebox) 
+- Epic 2: Model Selection
+	- Testing k-means at various k (medium, backlog) **
+	- Testing hierarchical clustering at varying linkage criteria and number of clusters (medium, icebox)
+	- Testing Gaussian mixture modeling at varying cluster shapes and rotations and with different number of clusters (long, icebox)
+- Epic 3: Implement model
+	- Develop scripts (medium, backlog)
+	- Run scripts to "train" (quick, backlog)
+### Initiative 3: Develop the app
+- Epic 1: Create app frontend
+	- Create landing page (unknown, backlog)
+	- Create interactive survey (unkown, backlog)
+- Epic 2: Integrate app with selected unsupervised model (unknown, backlog)
+	- Too little known to write stories
 
 
 _____________________________________________________
