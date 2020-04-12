@@ -19,9 +19,9 @@ Success is very difficult to measure in an unsupervised learning model, as such 
 
 Note that stories are signed with "quick," "medium," "long," and "unknown" to identify the amount of time it will take to accomplish each task and will be updated with numbers (as detailed in the project assignment) over time. These categories can be used to link to the numerical ranking system (approximately) as follows: quick:0-2, medium:2-4, long:4-8, unknown:2-8. Not enough is known to give a single number to everything, and so the method described above is used for consistency.
 
-It is also important to remember that this is a class project involving instruction of many tools, including Docker, S3, RDS, etc. If you put me and a computer in a room and told me I had to use or explain these tools immediately to save my life, I would surely die. Therefore, for the most part, I have omitted the use of such tools from my backlog. Consider "attend class and learn these tools, then update the backlog as necessary" to be an implicit initiative.
+It is also important to remember that this is a class project involving instruction of many tools, including Docker, S3, RDS, Flask, etc. If you put me and a computer in a room and told me I had to use or explain these tools immediately to save my life, I would surely die. Therefore, for the most part, I have omitted the use of such tools from my backlog. Consider "attend class and learn these tools, then update the backlog as necessary" to be an implicit initiative.
 
-### Initiative 1: Planning in order to ensure that nothing is left out, the project is viable, and to facilitate work over the coming weeks
+### Initiative 0: Planning in order to ensure that nothing is left out, the project is viable, and to facilitate work over the coming weeks. While likely not normally considered an initiative, this is an imperative step in the process and should not be overlooked, so here I will treat it - somewhat unconventionally - as an initiative. These steps enforce structure, which allows the development of an app that meets the business objectives.
 - Epic 1: Develop charter to use as a reference so that I do not deviate from the mission during development
 	- Vision (quick:0, backlog) **
 	- Mission (quick:0, backlog) **
@@ -30,7 +30,7 @@ It is also important to remember that this is a class project involving instruct
 	- Initiatives (quick:1, backlog) **
 	- Epics (quick:1, backlog) **
 	- Stories (quick:1, backlog) **
-### Initiative 2: Develop an unsupervised, clustering-based model with the "best" natural groupings (best is determined based both on appropriate quantitiative metrics, such as those pertaining to eigenvalues, as well as by explainability of the groupings found) in order to power the app.
+### Initiative 1: Develop an unsupervised, clustering-based model with the "best" natural groupings (best is determined based both on appropriate quantitiative metrics, such as those pertaining to eigenvalues, as well as by explainability of the groupings found) in order to power the app. This is critical to the business value of the project because this is the core of the backend; providing a user a recommendation that can be used to select a new dog can only be done if this initiative is completed.
 - Epic 1: Prepare the data in order to do analysis that will power the app
 	- Format data (quick, backlog) **
 	- Store data in S3 (unknown, icebox)
@@ -41,7 +41,7 @@ It is also important to remember that this is a class project involving instruct
 - Epic 3: Implement model in the app in order to make it useable, as it currently exists outside the framework of the app backend
 	- Develop scripts (medium, backlog)
 	- Run scripts to "train" (quick, backlog)
-### Initiative 3: Develop the app with which the user will interact
+### Initiative 2: Develop the app with which the user will interact, enabling the app to achieve its business goals by turning it into a usable product for future adopters.
 - Epic 1: Create app frontend so that the user actually has the ability to interact with the app without knowledge of programming
 	- Create landing page (unknown, backlog)
 	- Create interactive survey (unkown, backlog)
