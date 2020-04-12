@@ -16,32 +16,33 @@ Success is very difficult to measure in an unsupervised learning model, as such 
 
 ## Backlog
 ** denotes a task that will be addressed in the next 2-week sprint
-note that stories are signed with "quick," "medium," "long," and "unknown" to identify the amount of time it will take to accomplish each task and will be updated with numbers (as detailed in the project assignment) over time. Currently, too little is known about the content of this course and the project to accurately assess time beyond the categories specified here. 
-### Initiative 1: Planning
-- Epic 1: Develop charter
-	- Vision (quick, backlog) **
-	- Mission (quick, backlog) **
-	- Success Criteria (quick, backlog but subject to change) **
-- Epic 2: Develop backlog
-	- Initiatives (quick, backlog) **
-	- Epics (quick, backlog) **
-	- Stories (quick, backlog) **
-### Initiative 2: Develop an unsupervised, clustering-based model with the "best" natural groupings (best is determined based both on appropriate quantitiative metrics, such as those pertaining to eigenvalues, as well as by explainability of the groupings found).
-- Epic 1: Data Preparation
+note that stories are signed with "quick," "medium," "long," and "unknown" to identify the amount of time it will take to accomplish each task and will be updated with numbers (as detailed in the project assignment) over time. These categories can be used to link to the numerical ranking system (approximately) as follows: quick:0-2, medium:2-4, long:4-8, unknown:2-8. Not enough is known to give a single number to everything, and so the method described above is used for consistency.
+
+### Initiative 1: Planning in order to ensure that nothing is left out, the project is viable, and to facilitate work over the coming weeks
+- Epic 1: Develop charter to use as a reference so that I do not deviate from the mission during development
+	- Vision (quick:0, backlog) **
+	- Mission (quick:0, backlog) **
+	- Success Criteria (quick:0, backlog but subject to change) **
+- Epic 2: Develop backlog to use as a reference so that I do not stray too far from the plan and so that I have a living document to update in the event that I need to change plans.
+	- Initiatives (quick:1, backlog) **
+	- Epics (quick:1, backlog) **
+	- Stories (quick:1, backlog) **
+### Initiative 2: Develop an unsupervised, clustering-based model with the "best" natural groupings (best is determined based both on appropriate quantitiative metrics, such as those pertaining to eigenvalues, as well as by explainability of the groupings found) in order to power the app.
+- Epic 1: Prepare the data in order to do analysis that will power the app
 	- Format data (quick, backlog) **
 	- Store data in S3 (unknown, icebox)
-- Epic 2: Model Selection
+- Epic 2: Select a model through comparison of a variety of types, ensuring that the cluster assignments for users are meaningful and valuable
 	- Testing k-means at various k (medium, backlog) **
 	- Testing hierarchical clustering at varying linkage criteria and number of clusters (medium, icebox)
 	- Testing Gaussian mixture modeling at varying cluster shapes and rotations and with different number of clusters (long, icebox)
-- Epic 3: Implement model
+- Epic 3: Implement model in the app in order to make it useable, as it currently exists outside the framework of the app backend
 	- Develop scripts (medium, backlog)
 	- Run scripts to "train" (quick, backlog)
-### Initiative 3: Develop the app
-- Epic 1: Create app frontend
+### Initiative 3: Develop the app with which the user will interact
+- Epic 1: Create app frontend so that the user actually has the ability to interact with the app without knowledge of programming
 	- Create landing page (unknown, backlog)
 	- Create interactive survey (unkown, backlog)
-- Epic 2: Integrate app with selected unsupervised model (unknown, backlog)
+- Epic 2: Integrate app with selected unsupervised model so that the app actually leverages the model that was trained (unknown, backlog)
 	- Too little known to write stories
 
 
