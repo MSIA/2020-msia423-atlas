@@ -48,7 +48,7 @@ It is also important to remember that this is a class project involving instruct
 - Epic 2: Integrate app with selected unsupervised model so that the app actually leverages the model that was trained (unknown, backlog)
 	- Too little known to write stories
 
-N
+
 _____________________________________________________
 
 # MSiA423 Template Repository
