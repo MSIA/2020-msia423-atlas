@@ -1,56 +1,62 @@
 # MSiA 423 Project Repository
-This project was created by Jake Atlas, with QA contributions from Brian Cai. Use the links below to jump to particular areas of interest.
 
-- [Project Charter](#project-charter)
-- [Backlog](#backlog)
+## Midpoint
+### Getting the data into S3
+Navigate to `/2020-msia423-atlas/src/config.py`.
+1. Fill in your information for S3_BUCKET_NAME and S3_PUBLIC_KEY. Only make changes to the other variables if you are moving or renaming the data. It is highly recommended to not move or rename the data. The data currently lives in `/2020-msia423-atlas/data/raw_data.xlsx`.
 
-## Project Charter
-### Vision
-This project was born out of a desire to minimize time spent on research when adopting a new puppy. There are countless attributes a future dog adopter must consider that make some dog breeds more desirable than others. The application developed here seeks to circumvent the initial step of performing extensive research by limiting the scope of the search for ideal dog breeds.
+2) Add your secret key for S3 to your environment variables:
+```bash
+export MSIA423_S3_SECRET=<insert your secret key here and remove carat brackets>
+```
 
-### Mission
-To build an application that provides an intuitive user interface for interaction with an unsupervised clustering model "trained" on manually-compiled data regarding characteristics of American Kennel Club (AKC) dog breeds from dogtime.com, located [here](https://github.com/MSIA/2020-msia423-atlas/blob/master/data/external/Dogtime%20characteristics.xlsx). Users will provide information through the interface and will be supplied with recommendations of dog breeds to investigate based on cluster membership. 
+3) Run the store_data_s3.py file
+```bash
+python ./src/store_data_s3.py
+```
 
-### Success Criteria
-Success is very difficult to measure in an unsupervised learning model, as such models find natural groupings in the data. Therefore success will be defined instead as the identification of at least 4 unique clusters, which would cut the research time by as much as 75%. This project would be deemed successful from a business standpoint if it helps even 1 person find their new puppy soulmate.
+The raw data is now in your S3 bucket! 
 
-## Backlog
-There were some suggestions regarding the method of structuring this backlog given to us in course notes. I have used those structuring notes to develop a format that I find to be most intutive for me, as I'm the primary developer in this project. If it is the case - contrary to my understanding - that the format of this document is rigid (in which case I have structured things incorrectly according to standards) then I apologize. Luckily, this document serves to benefit me and I am confident I will derive value from it as it stands.
-- ** denotes a task that will be addressed in the next 2-week sprint
-- Note that stories are signed with "quick," "medium," "long," and "unknown" to identify the amount of time it will take to accomplish each task and will be updated with numbers (as detailed in the project assignment) over time. These categories can be used to link to the numerical ranking system (approximately) as follows: quick:0-2, medium:2-4, long:4-8, unknown:2-8. Not enough is known to give a single number to everything, and so the method described above is used for consistency.
-- It is also important to remember that this is a class project involving instruction of many tools, including Docker, S3, RDS, Flask, etc. If you put me and a computer in a room and told me I had to use or explain these tools immediately to save my life, I would surely die. Therefore, for the most part, I have omitted the use of such tools from my backlog. Consider "attend class and learn these tools, then update the backlog as necessary" to be an implicit initiative.
+### Setting up your database with RDS
+1) Make sure your IP address matches with your RDS settings
+2) Edit the mysql config file to match your credentials. From the root of the repository run:
+```bash
+vi .mysqlconfig
+```
 
-### Initiative 0: Planning in order to ensure that nothing is left out, the project is viable, and to facilitate work over the coming weeks. While likely not normally considered an initiative, this is an imperative step in the process and should not be overlooked, so here I will treat it - somewhat unconventionally - as an initiative. These steps enforce structure, which allows the development of an app that meets the business objectives.
-- Epic 1: Develop charter to use as a reference so that I do not deviate from the mission during development
-	- Vision (quick:0, backlog) **
-	- Mission (quick:0, backlog) **
-	- Success Criteria (quick:0, backlog but subject to change) **
-- Epic 2: Develop backlog to use as a reference so that I do not stray too far from the plan and so that I have a living document to update in the event that I need to change plans.
-	- Initiatives (quick:1, backlog) **
-	- Epics (quick:1, backlog) **
-	- Stories (quick:1, backlog) **
-### Initiative 1: Develop an unsupervised, clustering-based model with the "best" natural groupings (best is determined based both on appropriate quantitiative metrics, such as those pertaining to eigenvalues, as well as by explainability of the groupings found) in order to power the app. This is critical to the business value of the project because this is the core of the backend; providing a user a recommendation that can be used to select a new dog can only be done if this initiative is completed.
-- Epic 1: Prepare the data in order to do analysis that will power the app
-	- Format data (quick, backlog) **
-	- Store data in S3 (unknown, icebox)
-- Epic 2: Select a model through comparison of a variety of types, ensuring that the cluster assignments for users are meaningful and valuable
-	- Testing k-means at various k (medium, backlog) **
-	- Testing hierarchical clustering at varying linkage criteria and number of clusters (medium, icebox)
-	- Testing Gaussian mixture modeling at varying cluster shapes and rotations and with different number of clusters (long, icebox)
-- Epic 3: Implement model in the app in order to make it useable, as it currently exists outside the framework of the app backend
-	- Develop scripts (medium, backlog)
-	- Run scripts to "train" (quick, backlog)
-### Initiative 2: Develop the app with which the user will interact, enabling the app to achieve its business goals by turning it into a usable product for future adopters.
-- Epic 1: Create app frontend so that the user actually has the ability to interact with the app without knowledge of programming
-	- Create landing page (unknown, backlog)
-	- Create interactive survey (unkown, backlog)
-- Epic 2: Integrate app with selected unsupervised model so that the app actually leverages the model that was trained (unknown, backlog)
-	- Too little known to write stories
+* Set `MYSQL_USER` to the "master username" that you used to create the database server (default is 'admin' when setting up RDS instance).
+* Set `MYSQL_PASSWORD` to the "master password" that you used to create the database server.
+* Set `MYSQL_HOST` to be the RDS instance endpoint from the console
+* Set `MYSQL_PORT` to be `3306` (or whatever your port is)
+
+Now set the environment variables in your `~/.bashrc`
+
+```bash
+echo 'source .mysqlconfig' >> ~/.bashrc
+source ~/.bashrc
+```
+
+3) Run the Docker container set up in the `run_mysql_client.sh` script.
+
+```bash
+sh run_mysql_client.sh
+```
+
+4) Build the Docker image
+```bash
+docker build -t dog_breeds_mysql .
+```
+
+5) Set your database name and run the Docker container
+```bash
+export DATABASE_NAME=msia423_db
+sh run_docker.sh
+```
+
+Your data is now in the database!
 
 
-_____________________________________________________
-
-# MSiA423 Template Repository
+# Template Stuff
 
 <!-- toc -->
 
