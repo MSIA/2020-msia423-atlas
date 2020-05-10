@@ -68,7 +68,8 @@ session = Session()
 # Delete anything that's already in the table because the data is static
 try:
 	session.execute('''DELETE FROM dog_breeds''')
-
+except:
+	pass
 
 # Get the data 
 df = pd.read_csv(config.RAW_DATA_PATH).set_index('breed')
