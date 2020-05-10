@@ -66,7 +66,8 @@ Session = sessionmaker(bind=engine)
 session = Session()
 
 # Delete anything that's already in the table because the data is static
-session.execute('''DELETE FROM dog_breeds''')
+try:
+	session.execute('''DELETE FROM dog_breeds''')
 
 
 # Get the data 
@@ -104,37 +105,5 @@ for index, row in df.iterrows():
 session.add_all(formatted_rows)
 session.commit()
 
-# # add a record
-# try:
-# 	session.add(Dog(breedname='Pointer4', apt_living=1))
-# 	session.commit()
-# except:
-# 	raise ValueError("The dog breed is already in the table!")
-
-# logger.info("Database created with song added: Radar by Britney spears from the album, Circus")  
-# track2 = Track(artist="Tayler Swift", album="Red", title="Red")  
-# session.add(track2)
-
-# To add multiple rows
-# session.add_all([track1, track2])
-
-
-# session.commit()   
-logger.info("Database created with song added: Red by Taylor Swift from the album, Red")
-logger.info("Database created with dog added: Pointer (apt living 1)")
-
-# query records
-# track_record = session.query(Track.title, Track.album).filter_by(artist="Britney Spears").first() 
-# print(track_record)
-#dog_record = session.query(Dog.breedname, Dog.apt_living).filter_by(breedname='Pointer').first()
-#print(dog_record)
-
-query = "SELECT * FROM dog_breeds"
-result = session.execute(query)
-print(result.first().items())
-
-# query = "SELECT * FROM tracks WHERE artist LIKE '%%Britney%%'"
-# result = session.execute(query)
-# print(result.first().items())
-
+logger.info("Database created with all raw data added")
 session.close()
