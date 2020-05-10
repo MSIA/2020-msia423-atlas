@@ -36,10 +36,24 @@ echo 'source .mysqlconfig' >> ~/.bashrc
 source ~/.bashrc
 ```
 
-3) Run the Docker container set up in the `run_mysql_client.sh` script.
+3) Verify that your MySQL client is functional. Run the `run_mysql_client.sh` script that creates a Docker container with a connection to your SQL database.
 
 ```bash
 sh run_mysql_client.sh
+```
+
+If you are going through these instructions for the first time, skip from here to step 4. However, once you've completed the process, you can later return to this step and run queries. Once you've completed these steps, you can query the dog_breeds table in the msia423_db database as follows:
+
+```bash
+use msia423_db;
+```
+Now enter queries. For example, if you want to see all dogs that have "Retriever" in their breed name, try:
+```bash
+SELECT breedname FROM dob_breeds WHERE breedname LIKE '%%Retriever%%';
+```
+To exit the system, just type:
+```bash
+exit;
 ```
 
 4) Build the Docker image
@@ -53,7 +67,19 @@ export DATABASE_NAME=msia423_db
 sh run_docker.sh
 ```
 
-Your data is now in the database!
+Your data is now in the database! Feel free to return to step 3 to verify that the data looks as expected:
+```bash
++------------------------------------------------+
+| breedname                                        |
++------------------------------------------------+
+| Chesapeake Bay Retriever               |
+| Curly-Coated Retriever                     |
+| Flat-Coated Retriever                       |
+| Golden Retriever                              |
+| Labrador Retriever                           |
+| Nova Scotia Duck Tolling Retriever  |
++-----------------------------------------------+
+```
 
 
 # Template Stuff
