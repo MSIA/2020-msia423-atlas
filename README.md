@@ -1,25 +1,21 @@
 # MSiA 423 Project Repository
 
 ## Midpoint
-### Getting the data into S3
-Navigate to `/2020-msia423-atlas/src/config.py`.
-1. Fill in your information for S3_BUCKET_NAME and S3_PUBLIC_KEY. Only make changes to the other variables if you are moving or renaming the data. It is highly recommended to not move or rename the data. The data currently lives in `/2020-msia423-atlas/data/raw_data.xlsx`.
+### Getting the data into S3 and populating the RDS instance with the data.
+1) Navigate to the root of the repository. 
+```bash
+vi config.py 
+```
+Fill in your information for S3_BUCKET_NAME and S3_PUBLIC_KEY. Only make changes to the other variables if you are moving or renaming the data. It is highly recommended to not move or rename the data. The data currently lives in `/2020-msia423-atlas/data/raw_data.xlsx`.
 
 2) Add your secret key for S3 to your environment variables:
 ```bash
 export MSIA423_S3_SECRET=<insert your secret key here and remove carat brackets>
 ```
 
-3) Run the store_data_s3.py file
-```bash
-python ./src/store_data_s3.py
-```
+3) Make sure your IP address matches with your RDS settings.
 
-The raw data is now in your S3 bucket! 
-
-### Setting up your database with RDS
-1) Make sure your IP address matches with your RDS settings
-2) Edit the mysql config file to match your credentials. From the root of the repository run:
+4) Edit the .mysqlconfig file to match your credentials. From the root of the repository run:
 ```bash
 vi .mysqlconfig
 ```
@@ -36,13 +32,13 @@ echo 'source .mysqlconfig' >> ~/.bashrc
 source ~/.bashrc
 ```
 
-3) Verify that your MySQL client is functional. Run the `run_mysql_client.sh` script that creates a Docker container with a connection to your SQL database.
+4) Verify that your MySQL client is functional. Run the `run_mysql_client.sh` script that creates a Docker container with a connection to your SQL database.
 
 ```bash
 sh run_mysql_client.sh
 ```
 
-If you are going through these instructions for the first time, skip from here to step 4. However, once you've completed the process, you can later return to this step and run queries. Once you've completed these steps, you can query the dog_breeds table in the msia423_db database as follows:
+If you are going through these instructions for the first time, skip from here to step 5. However, once you've completed the process, you can later return to this step and run queries. Once you've completed these steps, you can query the dog_breeds table in the msia423_db database as follows:
 
 ```bash
 use msia423_db;
@@ -56,18 +52,19 @@ To exit the system, just type:
 exit;
 ```
 
-4) Build the Docker image
-```bash
-docker build -t dog_breeds_mysql .
-```
-
 5) Set your database name and run the Docker container
 ```bash
 export DATABASE_NAME=msia423_db
+```
+
+6) Build the Docker image and run the container
+```bash
+docker build -t dog_breeds_mysql .
 sh run_docker.sh
 ```
 
-Your data is now in the database! Feel free to return to step 3 to verify that the data looks as expected:
+
+Your data is now in the database, with the schema defined, and the raw data has also been added to your S3 bucket! Feel free to return to step 3 to verify that the data looks as expected:
 ```bash
 +------------------------------------------------+
 | breedname                                        |
