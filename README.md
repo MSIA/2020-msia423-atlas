@@ -6,7 +6,7 @@
 ```bash
 vi config.py 
 ```
-Fill in your information for S3_BUCKET_NAME and S3_PUBLIC_KEY. Only make changes to the other variables if you are moving or renaming the data. It is highly recommended to not move or rename the data. The data currently lives in `/2020-msia423-atlas/data/raw_data.xlsx`. You can select whether you'd like to use an RDS instance or a local SQLite database by changing the RDS_FLAG variable. Setting it to True will put the data in your RDS instance, whereas setting it to False will put the data in a local SQLite database at the path specified in LOCAL_DB_WRITE_PATH. 
+Fill in your information for S3_BUCKET_NAME and S3_PUBLIC_KEY. Only make changes to the other variables if you are moving or renaming the data. It is highly recommended to not move or rename the data. The data currently lives in `/2020-msia423-atlas/data/raw_data.csv`. You can select whether you'd like to use an RDS instance or a local SQLite database by changing the RDS_FLAG variable. Setting it to True will put the data in your RDS instance, whereas setting it to False will put the data in a local SQLite database at the path specified in LOCAL_DB_WRITE_PATH. 
 
 2) Add your secret key for S3 to your environment variables:
 ```bash
