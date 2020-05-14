@@ -7,19 +7,22 @@ from sqlalchemy import Column, Integer, String, MetaData
 import pandas as pd
 import config
 
-def establish_schema_RDS():
+def establish_schema():
 	conn_type = "mysql+pymysql"
 	user = os.environ.get("MYSQL_USER")
 	password = os.environ.get("MYSQL_PASSWORD")
 	host = os.environ.get("MYSQL_HOST")
 	port = os.environ.get("MYSQL_PORT")
 	database = os.environ.get("DATABASE_NAME")
-	engine_string = "{}://{}:{}@{}:{}/{}".format(conn_type, user, password, host, port, database)
+	if config.RDS_FLAG:
+		engine_string = "{}://{}:{}@{}:{}/{}".format(conn_type, user, password, host, port, database)
+	else:
+		engine_string = 'sqlite:////{}'.format(config.LOCAL_DB_WRITE_PATH)
 
 	Base = declarative_base()  
 
 	class Dog(Base):
-		"""Create a data model for the dtabase to be set up for capturing dog breeds """
+		"""Create a data model for the database to be set up for capturing dog breeds """
 		__tablename__ = 'dog_breeds'
 		breedname = Column(String(100), primary_key=True, nullable=False)
 		adaptability_apt_living = Column(Integer, unique=False, nullable=False)
@@ -51,11 +54,10 @@ def establish_schema_RDS():
 		def __repr__(self):
 			return('<Dogbreed: %r>' % self.breedname)
 
-
 	# Set up mysql connection
 	engine = sql.create_engine(engine_string)
 
-	# Create the tracks table
+	# Create the dog_breeds table
 	Base.metadata.create_all(engine)
 
 	# Set up logging config
@@ -74,6 +76,8 @@ def establish_schema_RDS():
 
 	# Get the data 
 	df = pd.read_csv(config.RAW_DATA_PATH).set_index('breed')
+
+	# Format the data to write to database
 	formatted_rows = []
 	for index, row in df.iterrows():
 		datarow = Dog(breedname = index, 
@@ -104,6 +108,7 @@ def establish_schema_RDS():
 						exercise_ex_needs = int(row.exercise_ex_needs),
 						exercise_playful = int(row.exercise_playful))
 		formatted_rows.append(datarow)
+	# Write to the database
 	session.add_all(formatted_rows)
 	session.commit()
 
