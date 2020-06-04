@@ -3,7 +3,6 @@ Jake Atlas, with QA contributions from Brian Cai
 Northwestern University MS in Analytics Course Project: Analytics Value Chain
 
 ## Setting Up
-### Getting the data into S3 and populating the RDS instance or a local SQLite database with the data.
 1) Navigate to the root of the repository. 
 ```bash
 vi config.py 
@@ -41,6 +40,7 @@ source ~/.bashrc
 
 4) Open the `your_dog_characteristic_preferences.xlsx` file in the root of the repository and provide your information in the `Your Preference` column. Since you may want to run the recommender multiple times but your preferences will remain unchanged, this section has been left as an Excel file instead of being included in the user interface of the web app. This way, you will not have to put all of the information in a second time in order to regenerate recommendations.
 
+## Running the App
 5) Build the Docker image and run the container to populate the database and get the app up and running
 ```bash
 docker build -f app/Dockerfile -t dogbreed .
