@@ -7,35 +7,29 @@
 
 <body>
     <h3>
-         <a href = "{{ url_for('index') }}">Penny Lane Music Recommender</a>
+         <a href = "{{ url_for('index') }}">Dog Breed Recommender</a>
     </h3>
 
     <hr/>
     <table>
          <thead>
             <tr>
-               <th>Title</th>
-               <th>Artist</th>
-               <th>Album</th>
+               <th>Input an approximate number of dogs. The algorithm will recommend as close to this number as is reasonable based on the natural groupings in the data. You cannot input a number smaller than 3.</th>
             </tr>
          </thead>
 
          <tbody>
-            {% for track in tracks %}
+            {% for dog in recommendations %}
                <tr>
-                   <td>{{ track.title }}</td>
-                   <td>{{ track.artist }}</td>
-                   <td>{{ track.album }}</td>
+                   <td>{{ dog }}</td>
                </tr>
             {% endfor %}
          </tbody>
       </table>
       <form action="{{ url_for('add_entry') }}" method=post class=add-entry>
       <dl>
-        <input type=text size=15 name=title placeholder="Title">
-        <input type=text size=15 name=artist placeholder="Artist">
-        <input type=text size=15 name=album placeholder="Album">
-        <input type=submit value=Add>
+        <input type=text size=15 name=numdogs placeholder="Approx. # of Dogs">
+        <input type=submit value=Submit>
       </dl>
     </form>
 

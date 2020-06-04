@@ -1,11 +1,10 @@
 import traceback
 from flask import render_template, request, redirect, url_for
 import logging.config
-# from app.models import Tracks
+from src.recommend_dogs import recommend_dogs
 from flask import Flask
-from src.add_songs import Tracks
-from flask_sqlalchemy import SQLAlchemy
-
+import pandas as pd
+import os
 
 # Initialize the Flask application
 app = Flask(__name__, template_folder="app/templates")
@@ -19,46 +18,53 @@ logging.config.fileConfig(app.config["LOGGING_CONFIG"])
 logger = logging.getLogger(app.config["APP_NAME"])
 logger.debug('Test log')
 
-# Initialize the database
-db = SQLAlchemy(app)
-
-
 @app.route('/')
 def index():
-    """Main view that lists songs in the database.
+    """Main view that lists dog breeds in the database.
 
-    Create view into index page that uses data queried from Track database and
-    inserts it into the msiapp/templates/index.html template.
+    Create view into index page that collects user input data.
 
     Returns: rendered html template
 
     """
 
     try:
-        tracks = db.session.query(Tracks).limit(app.config["MAX_ROWS_SHOW"]).all()
         logger.debug("Index page accessed")
-        return render_template('index.html', tracks=tracks)
+        try:
+            recommendations = list(pd.read_csv('./app/.recommended_breeds.csv')['Your Recommended Dog Breeds'])
+        except Exception as e:
+            # .recommended_breeds.csv was deleted or moved: recreate
+            logger.debug(e)
+            recommendations = []
+        pd.DataFrame(columns=['Your Recommended Dog Breeds']).to_csv('./app/.recommended_breeds.csv')
+        if len(recommendations) > 0:
+            return render_template('index.html', recommendations=recommendations)
+        else:
+            return render_template('index.html')
     except:
         traceback.print_exc()
-        logger.warning("Not able to display tracks, error page returned")
+        logger.warning("Not able to display breed recommendations, error page returned")
         return render_template('error.html')
 
 
 @app.route('/add', methods=['POST'])
 def add_entry():
-    """View that process a POST with new song input
+    """View that process a POST with input of approximate number of dog breeds to get
 
     :return: redirect to index page
     """
 
     try:
-        track1 = Tracks(artist=request.form['artist'], album=request.form['album'], title=request.form['title'])
-        db.session.add(track1)
-        db.session.commit()
-        logger.info("New song added: %s by %s", request.form['title'], request.form['artist'])
+        num_dogs = request.form['numdogs']
+        logger.debug('The number of dogs is: '+ num_dogs)
+        recommendations = recommend_dogs(int(num_dogs))
+        try:
+            pd.DataFrame(recommendations, columns=['Your Recommended Dog Breeds']).to_csv('./app/.recommended_breeds.csv')
+        except Exception as e:
+            logger.debug(e)
         return redirect(url_for('index'))
     except:
-        logger.warning("Not able to display tracks, error page returned")
+        logger.warning("Not able to display breed recommendations, error page returned")
         return render_template('error.html')
 
 

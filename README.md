@@ -1,216 +1,90 @@
-# MSiA 423 Project Repository
-This project was created by Jake Atlas, with QA contributions from Brian Cai. Use the links below to jump to particular areas of interest.
+# Dog Breed Recommender Web App
+Jake Atlas, with QA contributions from Brian Cai
+Northwestern University MS in Analytics Course Project: Analytics Value Chain
 
-- [Project Charter](#project-charter)
-- [Backlog](#backlog)
-
-## Project Charter
-### Vision
-This project was born out of a desire to minimize time spent on research when adopting a new puppy. There are countless attributes a future dog adopter must consider that make some dog breeds more desirable than others. The application developed here seeks to circumvent the initial step of performing extensive research by limiting the scope of the search for ideal dog breeds.
-
-### Mission
-To build an application that provides an intuitive user interface for interaction with an unsupervised clustering model "trained" on manually-compiled data regarding characteristics of American Kennel Club (AKC) dog breeds from dogtime.com, located [here](https://github.com/MSIA/2020-msia423-atlas/blob/master/data/external/Dogtime%20characteristics.xlsx). Users will provide information through the interface and will be supplied with recommendations of dog breeds to investigate based on cluster membership. 
-
-### Success Criteria
-Success is very difficult to measure in an unsupervised learning model, as such models find natural groupings in the data. Therefore success will be defined instead as the identification of at least 4 unique clusters, which would cut the research time by as much as 75%. This project would be deemed successful from a business standpoint if it helps even 1 person find their new puppy soulmate.
-
-## Backlog
-There were some suggestions regarding the method of structuring this backlog given to us in course notes. I have used those structuring notes to develop a format that I find to be most intutive for me, as I'm the primary developer in this project. If it is the case - contrary to my understanding - that the format of this document is rigid (in which case I have structured things incorrectly according to standards) then I apologize. Luckily, this document serves to benefit me and I am confident I will derive value from it as it stands.
-- ** denotes a task that will be addressed in the next 2-week sprint
-- Note that stories are signed with "quick," "medium," "long," and "unknown" to identify the amount of time it will take to accomplish each task and will be updated with numbers (as detailed in the project assignment) over time. These categories can be used to link to the numerical ranking system (approximately) as follows: quick:0-2, medium:2-4, long:4-8, unknown:2-8. Not enough is known to give a single number to everything, and so the method described above is used for consistency.
-- It is also important to remember that this is a class project involving instruction of many tools, including Docker, S3, RDS, Flask, etc. If you put me and a computer in a room and told me I had to use or explain these tools immediately to save my life, I would surely die. Therefore, for the most part, I have omitted the use of such tools from my backlog. Consider "attend class and learn these tools, then update the backlog as necessary" to be an implicit initiative.
-
-### Initiative 0: Planning in order to ensure that nothing is left out, the project is viable, and to facilitate work over the coming weeks. While likely not normally considered an initiative, this is an imperative step in the process and should not be overlooked, so here I will treat it - somewhat unconventionally - as an initiative. These steps enforce structure, which allows the development of an app that meets the business objectives.
-- Epic 1: Develop charter to use as a reference so that I do not deviate from the mission during development
-	- Vision (quick:0, backlog) **
-	- Mission (quick:0, backlog) **
-	- Success Criteria (quick:0, backlog but subject to change) **
-- Epic 2: Develop backlog to use as a reference so that I do not stray too far from the plan and so that I have a living document to update in the event that I need to change plans.
-	- Initiatives (quick:1, backlog) **
-	- Epics (quick:1, backlog) **
-	- Stories (quick:1, backlog) **
-### Initiative 1: Develop an unsupervised, clustering-based model with the "best" natural groupings (best is determined based both on appropriate quantitiative metrics, such as those pertaining to eigenvalues, as well as by explainability of the groupings found) in order to power the app. This is critical to the business value of the project because this is the core of the backend; providing a user a recommendation that can be used to select a new dog can only be done if this initiative is completed.
-- Epic 1: Prepare the data in order to do analysis that will power the app
-	- Format data (quick, backlog) **
-	- Store data in S3 (unknown, icebox)
-- Epic 2: Select a model through comparison of a variety of types, ensuring that the cluster assignments for users are meaningful and valuable
-	- Testing k-means at various k (medium, backlog) **
-	- Testing hierarchical clustering at varying linkage criteria and number of clusters (medium, icebox)
-	- Testing Gaussian mixture modeling at varying cluster shapes and rotations and with different number of clusters (long, icebox)
-- Epic 3: Implement model in the app in order to make it useable, as it currently exists outside the framework of the app backend
-	- Develop scripts (medium, backlog)
-	- Run scripts to "train" (quick, backlog)
-### Initiative 2: Develop the app with which the user will interact, enabling the app to achieve its business goals by turning it into a usable product for future adopters.
-- Epic 1: Create app frontend so that the user actually has the ability to interact with the app without knowledge of programming
-	- Create landing page (unknown, backlog)
-	- Create interactive survey (unkown, backlog)
-- Epic 2: Integrate app with selected unsupervised model so that the app actually leverages the model that was trained (unknown, backlog)
-	- Too little known to write stories
-
-
-_____________________________________________________
-
-# MSiA423 Template Repository
-
-<!-- toc -->
-
-- [Directory structure](#directory-structure)
-- [Running the app](#running-the-app)
-  * [1. Initialize the database](#1-initialize-the-database)
-    + [Create the database with a single song](#create-the-database-with-a-single-song)
-    + [Adding additional songs](#adding-additional-songs)
-    + [Defining your engine string](#defining-your-engine-string)
-      - [Local SQLite database](#local-sqlite-database)
-  * [2. Configure Flask app](#2-configure-flask-app)
-  * [3. Run the Flask app](#3-run-the-flask-app)
-- [Running the app in Docker](#running-the-app-in-docker)
-  * [1. Build the image](#1-build-the-image)
-  * [2. Run the container](#2-run-the-container)
-  * [3. Kill the container](#3-kill-the-container)
-
-<!-- tocstop -->
-
-## Directory structure 
-
+## Setting Up
+1) Navigate to the root of the repository. 
+```bash
+vi config.py 
 ```
-├── README.md                         <- You are here
-├── api
-│   ├── static/                       <- CSS, JS files that remain static
-│   ├── templates/                    <- HTML (or other code) that is templated and changes based on a set of inputs
-│   ├── boot.sh                       <- Start up script for launching app in Docker container.
-│   ├── Dockerfile                    <- Dockerfile for building image to run app  
-│
-├── config                            <- Directory for configuration files 
-│   ├── local/                        <- Directory for keeping environment variables and other local configurations that *do not sync** to Github 
-│   ├── logging/                      <- Configuration of python loggers
-│   ├── flaskconfig.py                <- Configurations for Flask API 
-│
-├── data                              <- Folder that contains data used or generated. Only the external/ and sample/ subdirectories are tracked by git. 
-│   ├── external/                     <- External data sources, usually reference data,  will be synced with git
-│   ├── sample/                       <- Sample data used for code development and testing, will be synced with git
-│
-├── deliverables/                     <- Any white papers, presentations, final work products that are presented or delivered to a stakeholder 
-│
-├── docs/                             <- Sphinx documentation based on Python docstrings. Optional for this project. 
-│
-├── figures/                          <- Generated graphics and figures to be used in reporting, documentation, etc
-│
-├── models/                           <- Trained model objects (TMOs), model predictions, and/or model summaries
-│
-├── notebooks/
-│   ├── archive/                      <- Develop notebooks no longer being used.
-│   ├── deliver/                      <- Notebooks shared with others / in final state
-│   ├── develop/                      <- Current notebooks being used in development.
-│   ├── template.ipynb                <- Template notebook for analysis with useful imports, helper functions, and SQLAlchemy setup. 
-│
-├── reference/                        <- Any reference material relevant to the project
-│
-├── src/                              <- Source data for the project 
-│
-├── test/                             <- Files necessary for running model tests (see documentation below) 
-│
-├── app.py                            <- Flask wrapper for running the model 
-├── run.py                            <- Simplifies the execution of one or more of the src scripts  
-├── requirements.txt                  <- Python package dependencies 
+You can select whether you'd like to use an RDS instance or a local SQLite database by changing the RDS_FLAG variable. Setting it to True will put the data in your RDS instance, whereas setting it to False will put the data in a local SQLite database at the path specified in LOCAL_DB_WRITE_PATH. Please note that if you would like the app to run quickly, it is recommended to set it to False and create a local DB. The loading time on the web app is on the order of 10 seconds when using an RDS instance but only about 2 seconds if you use a local SQLite DB.
+
+Only make changes to the other variables if you are moving or renaming the data. It is highly recommended to not move or rename the data. The data currently lives in `/2020-msia423-atlas/data/raw_data.csv`. If you choose to make changes here, you may have to debug the code.
+
+2) Add your secret key, public key, and bucket name for S3 to your environment variables. Also specify the database name to be `msia423_db`:
+```bash
+export MSIA423_S3_SECRET=<insert your S3 secret key here and remove carat brackets>
+export S3_PUBLIC_KEY=<insert your S3 public key here and remove carat brackets>
+export S3_BUCKET_NAME=<insert your S3 bucket name here and remove carat brackets>
+export DATABASE_NAME=msia423_db
 ```
 
-## Running the app
-### 1. Initialize the database 
+3) Make sure your IP address matches with your RDS settings. If using my RDS instance, you'll need to be on the Northwestern University VPN.
 
-#### Create the database with a single song 
-To create the database in the location configured in `config.py` with one initial song, run: 
-
-`python run.py create_db --engine_string=<engine_string> --artist=<ARTIST> --title=<TITLE> --album=<ALBUM>`
-
-By default, `python run.py create_db` creates a database at `sqlite:///data/tracks.db` with the initial song *Radar* by Britney spears. 
-#### Adding additional songs 
-To add an additional song:
-
-`python run.py ingest --engine_string=<engine_string> --artist=<ARTIST> --title=<TITLE> --album=<ALBUM>`
-
-By default, `python run.py ingest` adds *Minor Cause* by Emancipator to the SQLite database located in `sqlite:///data/tracks.db`.
-
-#### Defining your engine string 
-A SQLAlchemy database connection is defined by a string with the following format:
-
-`dialect+driver://username:password@host:port/database`
-
-The `+dialect` is optional and if not provided, a default is used. For a more detailed description of what `dialect` and `driver` are and how a connection is made, you can see the documentation [here](https://docs.sqlalchemy.org/en/13/core/engines.html). We will cover SQLAlchemy and connection strings in the SQLAlchemy lab session on 
-##### Local SQLite database 
-
-A local SQLite database can be created for development and local testing. It does not require a username or password and replaces the host and port with the path to the database file: 
-
-```python
-engine_string='sqlite:///data/tracks.db'
-
+4) Edit the .mysqlconfig file to match your credentials. From the root of the repository run:
+```bash
+vi .mysqlconfig
 ```
 
-The three `///` denote that it is a relative path to where the code is being run (which is from the root of this directory).
+* Set `MYSQL_USER` to the "master username" that you used to create the database server (default is 'admin' when setting up RDS instance).
+* Set `MYSQL_PASSWORD` to the "master password" that you used to create the database server.
+* Set `MYSQL_HOST` to be the RDS instance endpoint from the console
+* Set `MYSQL_PORT` to be `3306` (or whatever your port is)
 
-You can also define the absolute path with four `////`, for example:
-
-```python
-engine_string = 'sqlite://///Users/cmawer/Repos/2020-MSIA423-template-repository/data/tracks.db'
-```
-
-
-### 2. Configure Flask app 
-
-`config/flaskconfig.py` holds the configurations for the Flask app. It includes the following configurations:
-
-```python
-DEBUG = True  # Keep True for debugging, change to False when moving to production 
-LOGGING_CONFIG = "config/logging/local.conf"  # Path to file that configures Python logger
-HOST = "0.0.0.0" # the host that is running the app. 0.0.0.0 when running locally 
-PORT = 5000  # What port to expose app on. Must be the same as the port exposed in app/Dockerfile 
-SQLALCHEMY_DATABASE_URI = 'sqlite:///data/tracks.db'  # URI (engine string) for database that contains tracks
-APP_NAME = "penny-lane"
-SQLALCHEMY_TRACK_MODIFICATIONS = True 
-SQLALCHEMY_ECHO = False  # If true, SQL for queries made will be printed
-MAX_ROWS_SHOW = 100 # Limits the number of rows returned from the database 
-```
-
-### 3. Run the Flask app 
-
-To run the Flask app, run: 
+Now set the environment variables in your `~/.bashrc`
 
 ```bash
-python app.py
+echo 'source .mysqlconfig' >> ~/.bashrc
+source ~/.bashrc
 ```
 
-You should now be able to access the app at http://0.0.0.0:5000/ in your browser.
+4) Open the `your_dog_characteristic_preferences.xlsx` file in the root of the repository and provide your information in the `Your Preference` column. Since you may want to run the recommender multiple times but your preferences will remain unchanged, this section has been left as an Excel file instead of being included in the user interface of the web app. This way, you will not have to put all of the information in a second time in order to regenerate recommendations.
 
-## Running the app in Docker 
+## Running the App
+5) Build the Docker image and run the container to populate the database and get the app up and running
+```bash
+docker build -f app/Dockerfile -t dogbreed .
+sh run_docker.sh
+```
 
-### 1. Build the image 
-
-The Dockerfile for running the flask app is in the `app/` folder. To build the image, run from this directory (the root of the repo): 
+The app is now running at `http://0.0.0.0:5000/`! Please enter this URL in a web browser and find out what dog breeds are best for you! Also, as a part of this process, your data is now in the database, with the schema defined, and the raw data has also been added to your S3 bucket. If you've used an RDS instance, you can choose to explore the data (this is not necessary) by using the MySQL client. If you'd like to skip this (recommended for just running the app), please skip to step 6 below. Otherwise, run the `run_mysql_client.sh` script that allows connection to your SQL database:
 
 ```bash
- docker build -f app/Dockerfile -t pennylane .
+sh run_mysql_client.sh
 ```
 
-This command builds the Docker image, with the tag `pennylane`, based on the instructions in `app/Dockerfile` and the files existing in this directory.
- 
-### 2. Run the container 
-
-To run the app, run from this directory: 
+You can query the dog_breeds table in the msia423_db database as follows:
 
 ```bash
-docker run -p 5000:5000 --name test pennylane
+use msia423_db;
 ```
-You should now be able to access the app at http://0.0.0.0:5000/ in your browser.
-
-This command runs the `pennylane` image as a container named `test` and forwards the port 5000 from container to your laptop so that you can access the flask app exposed through that port. 
-
-If `PORT` in `config/flaskconfig.py` is changed, this port should be changed accordingly (as should the `EXPOSE 5000` line in `app/Dockerfile`)
-
-### 3. Kill the container 
-
-Once finished with the app, you will need to kill the container. To do so: 
-
+Now enter queries. For example, if you want to see all dogs that have "Retriever" in their breed name, try:
 ```bash
-docker kill test 
+SELECT breedname FROM dog_breeds WHERE breedname LIKE '%%Retriever%%';
+```
+The expected output of that query is:
+```bash
++------------------------------------------------+
+| breedname                                        |
++------------------------------------------------+
+| Chesapeake Bay Retriever               |
+| Curly-Coated Retriever                     |
+| Flat-Coated Retriever                       |
+| Golden Retriever                              |
+| Labrador Retriever                           |
+| Nova Scotia Duck Tolling Retriever  |
++-----------------------------------------------+
 ```
 
-where `test` is the name given in the `docker run` command.
+To exit the system, just type:
+```bash
+exit;
+```
+
+6) To stop the Docker container, open a new terminal window and type the following commands:
+```bash
+docker kill dog_breed_recommender
+docker rm dog_breed_recommender
+```
+
+At this point the app and Docker container are no longer running. Congratulations on taking the first step in researching your new dog!
