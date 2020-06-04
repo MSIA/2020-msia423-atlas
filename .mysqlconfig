@@ -1,4 +1,4 @@
-export MYSQL_USER=
+export MYSQL_USER=admin
 export MYSQL_PASSWORD=
-export MYSQL_HOST=
-export MYSQL_PORT=
+export MYSQL_HOST=msia423-jakeatlas.ctxwgezu8wm5.us-east-2.rds.amazonaws.com
+export MYSQL_PORT=3306

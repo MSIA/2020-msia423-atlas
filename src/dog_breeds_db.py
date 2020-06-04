@@ -7,7 +7,50 @@ from sqlalchemy import Column, Integer, String, MetaData
 import pandas as pd
 import config
 
+Base = declarative_base()  
+
+class Dog(Base):
+	"""Create a data model for the database to be set up for capturing dog breeds """
+	__tablename__ = 'dog_breeds'
+	breedname = Column(String(100), primary_key=True, nullable=False)
+	adaptability_apt_living = Column(Integer, unique=False, nullable=False)
+	adaptability_new_owner = Column(Integer, unique=False, nullable=False)
+	adaptability_sensitivity = Column(Integer, unique=False, nullable=False)
+	adaptability_alone_ok = Column(Integer, unique=False, nullable=False)
+	adaptability_cold_ok = Column(Integer, unique=False, nullable=False)
+	adaptability_hot_ok = Column(Integer, unique=False, nullable=False)
+	friendliness_family = Column(Integer, unique=False, nullable=False)
+	friendliness_kids = Column(Integer, unique=False, nullable=False)
+	friendliness_dogs = Column(Integer, unique=False, nullable=False)
+	friendliness_strangers = Column(Integer, unique=False, nullable=False)
+	health_and_grooming_shedding = Column(Integer, unique=False, nullable=False)
+	health_and_grooming_drooling = Column(Integer, unique=False, nullable=False)
+	health_and_grooming_grooming = Column(Integer, unique=False, nullable=False)
+	health_and_grooming_health = Column(Integer, unique=False, nullable=False)
+	health_and_grooming_weight_gain = Column(Integer, unique=False, nullable=False)
+	health_and_grooming_size = Column(Integer, unique=False, nullable=False)
+	trainability_easy = Column(Integer, unique=False, nullable=False)
+	trainability_intelligence = Column(Integer, unique=False, nullable=False)
+	trainability_mouthy = Column(Integer, unique=False, nullable=False)
+	trainability_prey_drive	= Column(Integer, unique=False, nullable=False)
+	trainability_bark = Column(Integer, unique=False, nullable=False)
+	trainability_wanderlust = Column(Integer, unique=False, nullable=False)
+	exercise_energy = Column(Integer, unique=False, nullable=False)
+	exercise_intensity = Column(Integer, unique=False, nullable=False)	
+	exercise_ex_needs = Column(Integer, unique=False, nullable=False)	
+	exercise_playful = Column(Integer, unique=False, nullable=False)		
+	def __repr__(self):
+		return('<Dogbreed: %r>' % self.breedname)
+
 def establish_schema():
+	"""Collects the data and inserts it into a local SQLite or AWS RDS instance based on user specification
+
+	Args:
+		None
+	
+	Returns:
+		None
+	"""
 	conn_type = "mysql+pymysql"
 	user = os.environ.get("MYSQL_USER")
 	password = os.environ.get("MYSQL_PASSWORD")
@@ -18,41 +61,6 @@ def establish_schema():
 		engine_string = "{}://{}:{}@{}:{}/{}".format(conn_type, user, password, host, port, database)
 	else:
 		engine_string = 'sqlite:////{}'.format(config.LOCAL_DB_WRITE_PATH)
-
-	Base = declarative_base()  
-
-	class Dog(Base):
-		"""Create a data model for the database to be set up for capturing dog breeds """
-		__tablename__ = 'dog_breeds'
-		breedname = Column(String(100), primary_key=True, nullable=False)
-		adaptability_apt_living = Column(Integer, unique=False, nullable=False)
-		adaptability_new_owner = Column(Integer, unique=False, nullable=False)
-		adaptability_sensitivity = Column(Integer, unique=False, nullable=False)
-		adaptability_alone_ok = Column(Integer, unique=False, nullable=False)
-		adaptability_cold_ok = Column(Integer, unique=False, nullable=False)
-		adaptability_hot_ok = Column(Integer, unique=False, nullable=False)
-		friendliness_family = Column(Integer, unique=False, nullable=False)
-		friendliness_kids = Column(Integer, unique=False, nullable=False)
-		friendliness_dogs = Column(Integer, unique=False, nullable=False)
-		friendliness_strangers = Column(Integer, unique=False, nullable=False)
-		health_and_grooming_shedding = Column(Integer, unique=False, nullable=False)
-		health_and_grooming_drooling = Column(Integer, unique=False, nullable=False)
-		health_and_grooming_grooming = Column(Integer, unique=False, nullable=False)
-		health_and_grooming_health = Column(Integer, unique=False, nullable=False)
-		health_and_grooming_weight_gain = Column(Integer, unique=False, nullable=False)
-		health_and_grooming_size = Column(Integer, unique=False, nullable=False)
-		trainability_easy = Column(Integer, unique=False, nullable=False)
-		trainability_intelligence = Column(Integer, unique=False, nullable=False)
-		trainability_mouthy = Column(Integer, unique=False, nullable=False)
-		trainability_prey_drive	= Column(Integer, unique=False, nullable=False)
-		trainability_bark = Column(Integer, unique=False, nullable=False)
-		trainability_wanderlust = Column(Integer, unique=False, nullable=False)
-		exercise_energy = Column(Integer, unique=False, nullable=False)
-		exercise_intensity = Column(Integer, unique=False, nullable=False)	
-		exercise_ex_needs = Column(Integer, unique=False, nullable=False)	
-		exercise_playful = Column(Integer, unique=False, nullable=False)		
-		def __repr__(self):
-			return('<Dogbreed: %r>' % self.breedname)
 
 	# Set up mysql connection
 	engine = sql.create_engine(engine_string)
@@ -108,6 +116,7 @@ def establish_schema():
 						exercise_ex_needs = int(row.exercise_ex_needs),
 						exercise_playful = int(row.exercise_playful))
 		formatted_rows.append(datarow)
+
 	# Write to the database
 	session.add_all(formatted_rows)
 	session.commit()

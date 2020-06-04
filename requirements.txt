@@ -5,3 +5,5 @@ Flask==1.1.1
 PyMySQL==0.9.3
 Pandas==1.0.3
 boto3==1.13.7
+scikit-learn==0.23.1
+xlrd==1.2.0
