@@ -40,7 +40,6 @@ def recommend_dogs(num_dogs):
         logging.debug(e)
     logging.debug(dat.head())
     logging.debug('database read')
-    #dat = pd.read_csv('./data/external/raw_data.csv').set_index('breed')
     num_clusters = int(np.floor(np.shape(dat)[0]/num_dogs))
     recommendations = []
     for i in range(max(num_clusters-3, 2), min(num_clusters+3, 100)+1):
@@ -51,7 +50,11 @@ def recommend_dogs(num_dogs):
         try:
             recommendations.append(list(fitted_dat[fitted_dat['cluster_assignment']==km.predict(np.array(list(pd.read_excel('./your_dog_characteristic_preferences.xlsx', header=2,  usecols='B:D')['Your Preference'])).reshape(1,-1))[0]].index))
         except Exception as e:
-            logging.error('The process failed due to unallowable changes to the you_dog_characteristic_preferences file or its location' + e)
+            try:
+                # Will only ever work if we are in testing
+                recommendations.append(list(fitted_dat[fitted_dat['cluster_assignment']==km.predict(np.array(list(pd.read_excel('./../your_dog_characteristic_preferences.xlsx', header=2,  usecols='B:D')['Your Preference'])).reshape(1,-1))[0]].index))
+            except:
+                logging.error('The process failed due to unallowable changes to the your_dog_characteristic_preferences file or its location: ' + str(e))
     diffs = {}
     for recommendation in recommendations:
         diff = abs(num_dogs - len(recommendation))
