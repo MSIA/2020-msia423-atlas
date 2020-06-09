@@ -1,5 +1,6 @@
 # Dog Breed Recommender Web App
 Jake Atlas, with QA contributions from Brian Cai
+
 Northwestern University MS in Analytics Course Project: Analytics Value Chain
 
 ## Setting Up
