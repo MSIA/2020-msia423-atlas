@@ -90,7 +90,7 @@ docker rm dog_breed_recommender
 At this point the app and Docker container are no longer running. Congratulations on taking the first step in researching your new dog!
 
 ## Testing
-There are times that the app will struggle to give you a number of dogs near what you've asked for, particularly depending on your specifications. To provide you with advance knowledge of whether your recommendations are likely to differ significantly from the requested number, you can fill out the `your_dog_breed_characteristic_preferences.xlsx` sheet and then navigate to the `testing` directory of the repository. There, test:
+There are times that the app will struggle to give you a number of dogs near what you've asked for, particularly depending on your specifications. To provide you with advance knowledge of whether your recommendations are likely to differ significantly from the requested number, you can fill out the `your_dog_breed_characteristic_preferences.xlsx` sheet and then navigate to the `testing` directory of the repository (make sure you've followed the steps in `Setting Up` first). There, test:
 ```bash
 python3 testing.py
 ```
