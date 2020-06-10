@@ -17,19 +17,21 @@ def recommend_dogs(num_dogs):
     Returns:
         final_recommendation (list of strings): The recommended dog breeds for the user
     """
-    logging.debug('attempting to make a recommendation')
+    logging.debug('Attempting to make recommendations')
     random_state = 1
-    conn_type = "mysql+pymysql"
-    user = os.environ.get("MYSQL_USER")
-    password = os.environ.get("MYSQL_PASSWORD")
-    host = os.environ.get("MYSQL_HOST")
-    port = os.environ.get("MYSQL_PORT")
-    database = os.environ.get("DATABASE_NAME")
-    if config.RDS_FLAG:
-        engine_string = "{}://{}:{}@{}:{}/{}".format(conn_type, user, password, host, port, database)
+    if os.environ.get("SQLALCHEMY_DATABASE_URI") is None:
+        conn_type = "mysql+pymysql"
+        user = os.environ.get("MYSQL_USER")
+        password = os.environ.get("MYSQL_PASSWORD")
+        host = os.environ.get("MYSQL_HOST")
+        port = os.environ.get("MYSQL_PORT")
+        database = os.environ.get("DATABASE_NAME")
+        if config.RDS_FLAG:
+            engine_string = "{}://{}:{}@{}:{}/{}".format(conn_type, user, password, host, port, database)
+        else:
+            engine_string = 'sqlite:////{}'.format(config.LOCAL_DB_WRITE_PATH)
     else:
-        engine_string = 'sqlite:////{}'.format(config.LOCAL_DB_WRITE_PATH)
-    logging.debug(engine_string)
+        engine_string = os.environ.get("SQLALCHEMY_DATABASE_URI")
     # Set up mysql connection
     engine = sql.create_engine(engine_string)
     # Query the database
