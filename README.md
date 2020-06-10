@@ -90,6 +90,31 @@ docker rm dog_breed_recommender
 
 At this point the app and Docker container are no longer running. Congratulations on taking the first step in researching your new dog!
 
+## Subsequent Uses
+After the initial setup, subsequent uses can be simplified by instead following the following instructions:
+
+1) Set an environment variable for your database engine string. If you wrote the data to your RDS instance, you must use your specific RDS database URI:
+```bash
+export SQLALCHEMY_DATABASE_URI=<insert RDS engine string and remove carat brackets>
+```
+However, if you wrote your data to a local SQLite database, you can instead type the following:
+```bash
+export SQLALCHEMY_DATABASE_URI=sqlite://///app/data/sqlite_dog_breeds.db
+```
+In the event you chose to modify the location of the local database, you must replace `data/sqlite_dog_breeds.db` with the relative path of the file (from the repository root).
+
+2) Create the app by first building the Docker image and then running the container:
+```bash
+docker build -f app/Dockerfile -t dogbreed .
+sh run_docker.sh
+```
+
+3) When finished, terminate the running processes in a separate terminal window:
+```bash
+docker kill dog_breed_recommender
+docker rm dog_breed_recommender
+```
+
 ## Testing
 There are times that the app will struggle to give you a number of dogs near what you've asked for, particularly depending on your specifications. To provide you with advance knowledge of whether your recommendations are likely to differ significantly from the requested number, you can fill out the `your_dog_breed_characteristic_preferences.xlsx` sheet and then navigate to the `testing` directory of the repository (make sure you've followed the steps in `Setting Up` first). There, test:
 ```bash
