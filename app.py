@@ -2,6 +2,7 @@ import traceback
 from flask import render_template, request, redirect, url_for
 import logging.config
 from src.recommend_dogs import recommend_dogs
+from src.store_data_s3 import read_from_s3
 from flask import Flask
 import pandas as pd
 import os
@@ -69,4 +70,7 @@ def add_entry():
 
 
 if __name__ == '__main__':
+    # Download the data from S3
+    if os.environ.get("AWS_SECRET_ACCESS_KEY") is not None:
+        read_from_s3() 
     app.run(debug=app.config["DEBUG"], port=app.config["PORT"], host=app.config["HOST"])
